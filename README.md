@@ -55,6 +55,9 @@ As a team, we have decided to create a vulnerability scanner that will be applie
       -  Split report evenly
       -  Presentation slides
    
+## AI Aspect:
+- 
+   
 ## Timeline:
 - Week 1-2: Schedule times/dates available for meetings, learn github commands, and familiarize ourselves with OWASP Juice Shop application (Feb. 8 - 21)
 - Week 3-6: Code creation (Feb 22 - Mar. 21)
