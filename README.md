@@ -56,7 +56,9 @@ As a team, we have decided to create a vulnerability scanner that will be applie
       -  Presentation slides
    
 ## AI Aspect:
-- 
+- Output AI insights with report production
+- Double check flagged vulnerabilities
+- Use AI API key within code creation 
    
 ## Timeline:
 - Week 1-2: Schedule times/dates available for meetings, learn github commands, and familiarize ourselves with OWASP Juice Shop application (Feb. 8 - 21)
