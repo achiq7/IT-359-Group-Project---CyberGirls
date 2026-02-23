@@ -56,9 +56,9 @@ As a team, we have decided to create a vulnerability scanner that will be applie
       -  Presentation slides
    
 ## AI Aspect:
-- Output AI insights with report production
-- Double check flagged vulnerabilities
-- Use AI API key within code creation 
+- After the Python scanner complies its findings, we will leverage AI to output the severity of the findings, CVSS scoring/reasoning behind the score, and how the vulnerability could be exploited by an attacker if left unchecked
+- In order to reduce false positives, AI will analyze ambigous data/evidence by interpreting error message patterns and checking two verification steps against each other(baseline vs injected)
+- We will use AI to propose remediation methods/suggestions within an executive HTML/PDF report output, based upon analyzing vulnerability findings and evidence (headers, requests, authentication responses, etc)
    
 ## Timeline:
 - Week 1-2: Schedule times/dates available for meetings, learn github commands, and familiarize ourselves with OWASP Juice Shop application (Feb. 8 - 21)
