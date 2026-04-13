@@ -67,6 +67,13 @@ As a team, we have decided to create a vulnerability scanner that will be applie
 - Week 11:  Edit code (Apr. 12 - 18)
 - Week 12:  Final presentation slides and presentation video (Apr. 19 - May 2)
 - Week 13:  Final touches on the presentation slides, video, paper, and GitHub repository (May 3 - May 8)
+
+
+## Updates:
+- Week 9: Download Juice Shop and get GitHub CLI working on group VM
+- Week 10: Reasearch Juice Shop and better underwstand its workings
+- Week 11: Identify how Juice shop and code go hand in hand
+- Week 12: exploit code creation and trouble shooting 
   
 
 
