@@ -1,0 +1,13 @@
+*.tmp
+*.md
+**/new_dir/*.exe
+
+*.pyc
+*.pyo
+*.pyd
+
+venv/
+env/
+.venv/
+
+*.log
