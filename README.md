@@ -9,7 +9,10 @@ Web Application Vulnerabiliity Scanner -- Scans for vulnerabilities on websites 
 - Tools
 - Deliverables
 - Roles
+- AI aspect
 - Timeline
+- Updates
+- Video Link
 
 ## Team Members
 - D'Shanti Williams
