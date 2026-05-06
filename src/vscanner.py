@@ -1,6 +1,6 @@
-""
-Smart Web App Recon + Vulnerability Reporter
-Beginner-friendly starter for OWASP Juice Shop
+"""
+Vulnerability Scanner
+OWASP Juice Shop Reconnaissance
 
 Features:
 - Checks security headers
@@ -18,3 +18,27 @@ import os
 import re
 from dataclasses import dataclass, asdict
 from datetime import datetime
+
+#add more code
+from urllib.parse import urljoin, urlparse
+
+import requests
+
+
+# -----------------------------
+# Data model
+# -----------------------------
+@dataclass
+class Finding:
+    title: str
+    severity: str
+    url: str
+    description: str
+    evidence: str
+    recommendation: str
+
+
+# -----------------------------
+# Scanner class
+# -----------------------------
+class WebReconScanner:
