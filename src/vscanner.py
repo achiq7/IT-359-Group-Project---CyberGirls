@@ -1,4 +1,5 @@
 """
+
 Vulnerability Scanner
 OWASP Juice Shop Reconnaissance
 
@@ -10,7 +11,6 @@ Features:
 - Performs a simple reflected input test
 - Generates JSON and HTML reports
 
-Author: Your Team
 """
 import argparse
 import json
