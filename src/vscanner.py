@@ -1,5 +1,5 @@
-""
-Smart Web App Recon + Vulnerability Reporter
+"""
+Vulnerability Reporter
 Beginner-friendly starter for OWASP Juice Shop
 
 Features:
