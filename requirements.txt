@@ -9,3 +9,5 @@
     - urlparse
     - os 
     - argparse
+    - dataclass
+    - asdict
