@@ -1,1 +1,11 @@
-//requirements
+## Requirements:
+- Python3
+- Libraries:
+    - json
+    - datetime
+    - re
+    - requests
+    - urljoin
+    - urlparse
+    - os 
+    - argparse
