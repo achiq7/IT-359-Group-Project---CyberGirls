@@ -100,3 +100,105 @@ class WebReconScanner:
             )
         return response
 
+    def check_security_headers(self, response):
+        if response is None:
+            return
+
+        headers = response.headers
+        url = response.url
+
+        required_headers = {
+            "Content-Security-Policy": {
+                "severity": "Medium",
+                "description": "Without, people can get in and run their own script- XSS",
+                "recommendation": "Add content-security-policy header that allows scripts only you actually trust."
+            },
+            "X-Frame-Options": {
+                "severity": "Low",
+                "description": "Without, someone could put your site inside theirs and get people to click things",
+                "recommendation": "Set x-frame-options to DENY (nobody can frame it) or SAMEORIGIN (only you can)"
+            },
+            "X-Content-Type-Options": {
+                "severity": "Low",
+                "description": "Without, site may try running the site as a different file",
+                "recommendation": "Set x-content-type-options to nosniff so browser trusts what you tell it"
+            },
+            "Referrer-Policy": {
+                "severity": "Low",
+                "description": "Without, if someone clicks on your site, the next site will know where they came from (>
+                "recommendation": "Set referrer-policy to strict-origin-when-cross-origin, to not overshare"
+            }
+        }
+
+        for header, meta in required_headers.items():
+            if header not in headers:
+                self.add_finding(
+                    title=f"Missing Security Header: {header}",
+                    severity=meta["severity"],
+                    url=url,
+                    description=meta["description"],
+                    evidence=f"{header} was not present in the response headers.",
+                    recommendation=meta["recommendation"]
+                )
+
+        # HSTS only makes sense over HTTPS
+        parsed = urlparse(url)
+        if parsed.scheme == "https" and "Strict-Transport-Security" not in headers:
+            self.add_finding(
+                title="Missing Security Header: Strict-Transport-Security",
+                severity="Medium",
+                url=url,
+                description="HTTPS is in use, HSTS not enabled.",
+                evidence="Strict-Transport-Security header isn't present in the HTTPS response.",
+                recommendation="Enable HSTS to help enforce secure connections."
+            )
+
+    def check_cookies(self, response):
+        if response is None:
+            return
+
+        url = response.url
+        set_cookie_headers = response.headers.get("Set-Cookie")
+
+        if not set_cookie_headers:
+            self.add_finding(
+                title="No Cookies Observed",
+                severity="Info",
+                url=url,
+                description="No cookies seen",
+                evidence="Set-Cookie header not present.",
+                recommendation="This may be normal. Review authenticated areas separately for session cookie security"
+            )
+            return
+
+        cookie_header = set_cookie_headers.lower()
+
+        if "httponly" not in cookie_header:
+            self.add_finding(
+                title="Cookie Missing HttpOnly Flag",
+                severity="Medium",
+                url=url,
+                description="A cookie appears to be set without the HttpOnly flag (unprotected)",
+                evidence=response.headers.get("Set-Cookie", ""),
+                recommendation="Mark session cookies as HttpOnly so random scripts cant grab them"
+            )
+
+        if urlparse(url).scheme == "https" and "secure" not in cookie_header:
+            self.add_finding(
+                title="Cookie Missing Secure Flag",
+                severity="Medium",
+                url=url,
+                description="A cookie appears to be set over HTTPS without the Secure flag, can be sent to HTTP too",
+                evidence=response.headers.get("Set-Cookie", ""),
+                recommendation="Add the secure flag to cookies to only travel over HTTPS"
+            )
+        if "samesite" not in cookie_header:
+            self.add_finding(
+                title="Cookie Missing SameSite Attribute",
+                severity="Low",
+                url=url,
+                description="A cookie is  missing a SameSite, ",
+                evidence=response.headers.get("Set-Cookie", ""),
+                recommendation="Use SameSite=Lax (safe default) or SameSite=Strict (extra safe) on cookies"
+            )
+
