@@ -42,3 +42,22 @@ class Finding:
 # Scanner class
 # -----------------------------
 class WebReconScanner:
+def __init__(self, base_url: str, timeout: int = 8):
+        self.base_url = base_url.rstrip("/")
+        self.timeout = timeout
+        self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": "WebRecon/1.0 (Educational Project)" #let website know not to worry 
+        })
+        self.findings = []
+        self.scanned_urls = []
+
+    def add_finding(self, title, severity, url, description, evidence, recommendation):
+        self.findings.append(Finding(
+            title=title,
+            severity=severity,
+            url=url,
+            description=description,
+            evidence=evidence,
+            recommendation=recommendation
+        ))
