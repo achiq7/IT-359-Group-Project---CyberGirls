@@ -202,7 +202,7 @@ class WebReconScanner:
                 recommendation="Use SameSite=Lax (safe default) or SameSite=Strict (extra safe) on cookies"
             )
 
- def probe_common_paths(self):
+    def probe_common_paths(self):
         """
         Probe common files and a few Juice Shop-related endpoints.
         """
@@ -265,3 +265,22 @@ class WebReconScanner:
                     recommendation="Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization."
                 )
 
+     def reflected_input_test(self):
+        """
+        Simple reflected input test against a search endpoint.
+        This is an indicator-based check, not a full XSS exploit.
+        """
+        marker = "RECON_TEST_123456"
+        response = self.safe_get("/rest/products/search", params={"q": marker})
+        if response is None:
+            return
+
+        if marker in response.text:
+            self.add_finding(
+                title="Reflected Input Indicator Detected",
+                severity="Medium",
+                url=response.url,
+                description="User-controlled input was reflected in the response.",
+                evidence=f"Marker '{marker}' appeared in the response body.",
+                recommendation="Review output encoding and input handling to reduce reflected XSS risk."
+            )
