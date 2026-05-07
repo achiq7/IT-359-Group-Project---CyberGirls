@@ -79,7 +79,7 @@ As a team, we have decided to create a vulnerability scanner that will be applie
 - Week 12: exploit code creation and trouble shooting
 
 ## Video Link:
-
+https://youtu.be/B2Yz0pTOpLw
   
 
 
