@@ -265,7 +265,7 @@ class WebReconScanner:
                     recommendation="Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization."
                 )
 
-     def reflected_input_test(self):
+    def reflected_input_test(self):
         """
         Simple reflected input test against a search endpoint.
         This is an indicator-based check, not a full XSS exploit.
