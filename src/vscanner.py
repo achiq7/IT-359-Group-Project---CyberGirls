@@ -319,7 +319,7 @@ class WebReconScanner:
                         recommendation="Suppress detailed backend errors and implement safe exception handling."
                     )
                     return  # one finding is enough here
-
+#method to save json report
     def save_json_report(self, filename="results.json"):
         data = {
             "scan_time": datetime.utcnow().isoformat() + "Z",
@@ -333,6 +333,7 @@ class WebReconScanner:
 
         print(f"[+] JSON report saved to {filename}")
 
+#saves html report
     def save_html_report(self, filename="report.html"):
         findings_html = ""
         for finding in self.findings:
