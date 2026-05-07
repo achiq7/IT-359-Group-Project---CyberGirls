@@ -1,0 +1,171 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Smart Web App Recon Report</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    background: #f8f9fa;
+                    color: #222;
+                }
+                h1 {
+                    color: #1f4e79;
+                }
+                .meta {
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    background: #ffffff;
+                    border-left: 5px solid #1f4e79;
+                }
+                .finding {
+                    background: #ffffff;
+                    border: 1px solid #ddd;
+                    padding: 15px;
+                    margin-bottom: 20px;
+                    border-radius: 8px;
+                }
+                h2 {
+                    margin-top: 0;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Smart Web App Recon + Vulnerability Reporter</h1>
+            <div class="meta">
+                <p><strong>Base URL:</strong> http://localhost:3000</p>
+                <p><strong>Scan Time (UTC):</strong> 2026-05-07T11:25:55.396068Z</p>
+                <p><strong>Total Findings:</strong> 14</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Missing Security Header: Content-Security-Policy</h2>
+                <p><strong>Severity:</strong> Medium</p>
+                <p><strong>URL:</strong> http://localhost:3000/</p>
+                <p><strong>Description:</strong> Without, people can get in and run their own script- XSS</p>
+                <p><strong>Evidence:</strong> Content-Security-Policy was not present in the response headers.</p>
+                <p><strong>Recommendation:</strong> Add content-security-policy header that allows scripts only you actually trust.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Missing Security Header: Referrer-Policy</h2>
+                <p><strong>Severity:</strong> Low</p>
+                <p><strong>URL:</strong> http://localhost:3000/</p>
+                <p><strong>Description:</strong> Without, if someone clicks on your site, the next site will know where they came from </p>
+                <p><strong>Evidence:</strong> Referrer-Policy was not present in the response headers.</p>
+                <p><strong>Recommendation:</strong> Set referrer-policy to strict-origin-when-cross-origin, to not overshare</p>
+            </div>
+            
+            <div class="finding">
+                <h2>No Cookies Observed</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/</p>
+                <p><strong>Description:</strong> No cookies seen</p>
+                <p><strong>Evidence:</strong> Set-Cookie header not present.</p>
+                <p><strong>Recommendation:</strong> This may be normal. Review authenticated areas separately for session cookie security</p>
+            </div>
+            
+            <div class="finding">
+                <h2>robots.txt Reveals Hidden Paths</h2>
+                <p><strong>Severity:</strong> Low</p>
+                <p><strong>URL:</strong> http://localhost:3000/robots.txt</p>
+                <p><strong>Description:</strong> robots.txt may disclose directories or routes not intended for obvious discovery.</p>
+                <p><strong>Evidence:</strong> Disallow: /ftp</p>
+                <p><strong>Recommendation:</strong> Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/robots.txt</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/robots.txt</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/.git/</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/.git/</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/backup</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/backup</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/admin</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/admin</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/ftp</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/ftp</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/api-docs/</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/api-docs/</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/rest/admin/application-version</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/rest/admin/application-version</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/api/Challenges</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/api/Challenges</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Interesting Path Accessible</h2>
+                <p><strong>Severity:</strong> Info</p>
+                <p><strong>URL:</strong> http://localhost:3000/rest/products/search?q=test</p>
+                <p><strong>Description:</strong> The scanner found an accessible path that may warrant manual review.</p>
+                <p><strong>Evidence:</strong> Accessible path returned HTTP 200: http://localhost:3000/rest/products/search?q=test</p>
+                <p><strong>Recommendation:</strong> Manually inspect the resource to determine whether it discloses sensitive functionality or information.</p>
+            </div>
+            
+            <div class="finding">
+                <h2>Potential Error Disclosure Detected</h2>
+                <p><strong>Severity:</strong> Medium</p>
+                <p><strong>URL:</strong> http://localhost:3000/rest/products/search?q=%27%29</p>
+                <p><strong>Description:</strong> The application response contained backend or debugging error indicators after receiving unusual input.</p>
+                <p><strong>Evidence:</strong> Matched pattern 'sqlite' using payload '')'.</p>
+                <p><strong>Recommendation:</strong> Suppress detailed backend errors and implement safe exception handling.</p>
+            </div>
+            
+        </body>
+        </html>
+        

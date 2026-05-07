@@ -1,0 +1,134 @@
+{
+    "scan_time": "2026-05-07T11:25:55.395645Z",
+    "base_url": "http://localhost:3000",
+    "scanned_urls": [
+        "http://localhost:3000/",
+        "http://localhost:3000/.git/",
+        "http://localhost:3000/admin",
+        "http://localhost:3000/api-docs/",
+        "http://localhost:3000/api/Challenges",
+        "http://localhost:3000/backup",
+        "http://localhost:3000/ftp",
+        "http://localhost:3000/rest/admin/application-version",
+        "http://localhost:3000/rest/products/search?q=%22",
+        "http://localhost:3000/rest/products/search?q=%27",
+        "http://localhost:3000/rest/products/search?q=%27%29",
+        "http://localhost:3000/rest/products/search?q=RECON_TEST_123456",
+        "http://localhost:3000/rest/products/search?q=test",
+        "http://localhost:3000/robots.txt"
+    ],
+    "findings": [
+        {
+            "title": "Missing Security Header: Content-Security-Policy",
+            "severity": "Medium",
+            "url": "http://localhost:3000/",
+            "description": "Without, people can get in and run their own script- XSS",
+            "evidence": "Content-Security-Policy was not present in the response headers.",
+            "recommendation": "Add content-security-policy header that allows scripts only you actually trust."
+        },
+        {
+            "title": "Missing Security Header: Referrer-Policy",
+            "severity": "Low",
+            "url": "http://localhost:3000/",
+            "description": "Without, if someone clicks on your site, the next site will know where they came from ",
+            "evidence": "Referrer-Policy was not present in the response headers.",
+            "recommendation": "Set referrer-policy to strict-origin-when-cross-origin, to not overshare"
+        },
+        {
+            "title": "No Cookies Observed",
+            "severity": "Info",
+            "url": "http://localhost:3000/",
+            "description": "No cookies seen",
+            "evidence": "Set-Cookie header not present.",
+            "recommendation": "This may be normal. Review authenticated areas separately for session cookie security"
+        },
+        {
+            "title": "robots.txt Reveals Hidden Paths",
+            "severity": "Low",
+            "url": "http://localhost:3000/robots.txt",
+            "description": "robots.txt may disclose directories or routes not intended for obvious discovery.",
+            "evidence": "Disallow: /ftp",
+            "recommendation": "Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/robots.txt",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/robots.txt",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/.git/",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/.git/",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/backup",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/backup",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/admin",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/admin",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/ftp",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/ftp",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/api-docs/",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/api-docs/",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/rest/admin/application-version",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/rest/admin/application-version",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/api/Challenges",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/api/Challenges",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Interesting Path Accessible",
+            "severity": "Info",
+            "url": "http://localhost:3000/rest/products/search?q=test",
+            "description": "The scanner found an accessible path that may warrant manual review.",
+            "evidence": "Accessible path returned HTTP 200: http://localhost:3000/rest/products/search?q=test",
+            "recommendation": "Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+        },
+        {
+            "title": "Potential Error Disclosure Detected",
+            "severity": "Medium",
+            "url": "http://localhost:3000/rest/products/search?q=%27%29",
+            "description": "The application response contained backend or debugging error indicators after receiving unusual input.",
+            "evidence": "Matched pattern 'sqlite' using payload '')'.",
+            "recommendation": "Suppress detailed backend errors and implement safe exception handling."
+        }
+    ]
+}
