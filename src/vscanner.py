@@ -125,7 +125,7 @@ class WebReconScanner:
             },
             "Referrer-Policy": {
                 "severity": "Low",
-                "description": "Without, if someone clicks on your site, the next site will know where they came from (>
+                "description": "Without, if someone clicks on your site, the next site will know where they came from ">
                 "recommendation": "Set referrer-policy to strict-origin-when-cross-origin, to not overshare"
             }
         }
