@@ -284,3 +284,37 @@ class WebReconScanner:
                 evidence=f"Marker '{marker}' appeared in the response body.",
                 recommendation="Review output encoding and input handling to reduce reflected XSS risk."
             )
+    def error_disclosure_test(self):
+        """
+        Simple error-string test.
+        This is not exploitation—just checking whether obvious backend error details leak.
+        """
+        suspicious_inputs = ["'", "\"", "')", "test)"]
+        error_patterns = [
+            r"sql syntax",
+            r"mysql",
+            r"sqlite",
+            r"postgres",
+            r"unclosed quotation mark",
+            r"odbc",
+            r"stack trace",
+            r"exception"
+        ]
+
+        for payload in suspicious_inputs:
+            response = self.safe_get("/rest/products/search", params={"q": payload})
+            if response is None:
+                continue
+
+            text_lower = response.text.lower()
+            for pattern in error_patterns:
+                if re.search(pattern, text_lower):
+                    self.add_finding(
+                        title="Potential Error Disclosure Detected",
+                        severity="Medium",
+                        url=response.url,
+                        description="The application response contained backend or debugging error indicators after receiving unusual input.",
+                        evidence=f"Matched pattern '{pattern}' using payload '{payload}'.",
+                        recommendation="Suppress detailed backend errors and implement safe exception handling."
+                    )
+                    return  # one finding is enough here
