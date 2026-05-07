@@ -318,3 +318,16 @@ class WebReconScanner:
                         recommendation="Suppress detailed backend errors and implement safe exception handling."
                     )
                     return  # one finding is enough here
+
+    def save_json_report(self, filename="results.json"):
+        data = {
+            "scan_time": datetime.utcnow().isoformat() + "Z",
+            "base_url": self.base_url,
+            "scanned_urls": sorted(set(self.scanned_urls)),
+            "findings": [asdict(f) for f in self.findings]
+        }
+
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+
+        print(f"[+] JSON report saved to {filename}")
