@@ -417,3 +417,14 @@ def parse_args():
     parser.add_argument("--json", default="results.json", help="Output JSON filename")
     parser.add_argument("--html", default="report.html", help="Output HTML filename")
     return parser.parse_args()
+
+def main():
+    args = parse_args()
+    scanner = WebReconScanner(args.url)
+    scanner.run()
+    scanner.save_json_report(args.json)
+    scanner.save_html_report(args.html)
+
+
+if __name__ == "__main__":
+    main()
