@@ -407,3 +407,13 @@ class WebReconScanner:
         self.reflected_input_test()
         self.error_disclosure_test()
         print(f"[+] Scan complete. Findings collected: {len(self.findings)}")
+
+# -----------------------------
+# Main
+# -----------------------------
+def parse_args():
+    parser = argparse.ArgumentParser(description="Smart Web App Recon + Vulnerability Reporter")
+    parser.add_argument("--url", required=True, help="Base URL of the target web app, e.g. http://localhost:3000")
+    parser.add_argument("--json", default="results.json", help="Output JSON filename")
+    parser.add_argument("--html", default="report.html", help="Output HTML filename")
+    return parser.parse_args()
