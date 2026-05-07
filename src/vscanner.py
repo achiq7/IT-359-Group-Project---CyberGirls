@@ -25,9 +25,9 @@ from urllib.parse import urljoin, urlparse
 import requests
 
 
-# -----------------------------
+
 # Data model
-# -----------------------------
+
 @dataclass
 class Finding:
     title: str
@@ -38,9 +38,9 @@ class Finding:
     recommendation: str
 
 
-# -----------------------------
+
 # Scanner class
-# -----------------------------
+
 class WebReconScanner:
     def __init__(self, base_url: str, timeout: int = 8):
         self.base_url = base_url.rstrip("/")
@@ -106,7 +106,7 @@ class WebReconScanner:
 
         headers = response.headers
         url = response.url
-
+#include different headers plus remediation suggestions
         required_headers = {
             "Content-Security-Policy": {
                 "severity": "Medium",
@@ -152,7 +152,7 @@ class WebReconScanner:
                 evidence="Strict-Transport-Security header isn't present in the HTTPS response.",
                 recommendation="Enable HSTS to help enforce secure connections."
             )
-
+#checks cookie headers
     def check_cookies(self, response):
         if response is None:
             return
@@ -201,7 +201,7 @@ class WebReconScanner:
                 evidence=response.headers.get("Set-Cookie", ""),
                 recommendation="Use SameSite=Lax (safe default) or SameSite=Strict (extra safe) on cookies"
             )
-
+#checking through common vulnerable paths within Juice-shop environment
     def probe_common_paths(self):
         """
         Probe common files and a few Juice Shop-related endpoints.
@@ -264,7 +264,7 @@ class WebReconScanner:
                     evidence=" | ".join(disallowed),
                     recommendation="Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization."
                 )
-
+#reconnaissance testing
     def reflected_input_test(self):
         """
         Simple reflected input test against a search endpoint.
@@ -284,6 +284,7 @@ class WebReconScanner:
                 evidence=f"Marker '{marker}' appeared in the response body.",
                 recommendation="Review output encoding and input handling to reduce reflected XSS risk."
             )
+#checking for errors
     def error_disclosure_test(self):
         """
         Simple error-string test.
