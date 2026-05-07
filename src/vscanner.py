@@ -331,3 +331,68 @@ class WebReconScanner:
             json.dump(data, f, indent=4)
 
         print(f"[+] JSON report saved to {filename}")
+
+    def save_html_report(self, filename="report.html"):
+        findings_html = ""
+        for finding in self.findings:
+            findings_html += f"""
+            <div class="finding">
+                <h2>{finding.title}</h2>
+                <p><strong>Severity:</strong> {finding.severity}</p>
+                <p><strong>URL:</strong> {finding.url}</p>
+                <p><strong>Description:</strong> {finding.description}</p>
+                <p><strong>Evidence:</strong> {finding.evidence}</p>
+                <p><strong>Recommendation:</strong> {finding.recommendation}</p>
+            </div>
+            """
+
+        html = f"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Smart Web App Recon Report</title>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    background: #f8f9fa;
+                    color: #222;
+                }}
+                h1 {{
+                    color: #1f4e79;
+                }}
+                .meta {{
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    background: #ffffff;
+                    border-left: 5px solid #1f4e79;
+                }}
+                .finding {{
+                    background: #ffffff;
+                    border: 1px solid #ddd;
+                    padding: 15px;
+                    margin-bottom: 20px;
+                    border-radius: 8px;
+                }}
+                h2 {{
+                    margin-top: 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <h1>Smart Web App Recon + Vulnerability Reporter</h1>
+            <div class="meta">
+                <p><strong>Base URL:</strong> {self.base_url}</p>
+                <p><strong>Scan Time (UTC):</strong> {datetime.utcnow().isoformat()}Z</p>
+                <p><strong>Total Findings:</strong> {len(self.findings)}</p>
+            </div>
+            {findings_html if findings_html else "<p>No findings were recorded.</p>"}
+        </body>
+        </html>
+        """
+
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(html)
+
+        print(f"[+] HTML report saved to {filename}")
