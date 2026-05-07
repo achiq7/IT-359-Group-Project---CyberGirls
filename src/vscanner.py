@@ -396,3 +396,14 @@ class WebReconScanner:
             f.write(html)
 
         print(f"[+] HTML report saved to {filename}")
+
+    def run(self):
+        print(f"[+] Starting scan against {self.base_url}")
+        homepage_response = self.check_homepage()
+        self.check_security_headers(homepage_response)
+        self.check_cookies(homepage_response)
+        self.check_robots_txt()
+        self.probe_common_paths()
+        self.reflected_input_test()
+        self.error_disclosure_test()
+        print(f"[+] Scan complete. Findings collected: {len(self.findings)}")
