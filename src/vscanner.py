@@ -202,3 +202,66 @@ class WebReconScanner:
                 recommendation="Use SameSite=Lax (safe default) or SameSite=Strict (extra safe) on cookies"
             )
 
+ def probe_common_paths(self):
+        """
+        Probe common files and a few Juice Shop-related endpoints.
+        """
+        paths = [
+            "/robots.txt",
+            "/.git/",
+            "/backup",
+            "/admin",
+            "/ftp",
+            "/api-docs",
+            "/rest/admin/application-version",
+            "/api/Challenges",
+            "/rest/products/search?q=test"
+        ]
+
+        for path in paths:
+            response = self.safe_get(path)
+            if response is None:
+                continue
+
+            status = response.status_code
+
+            if status == 200:
+                self.add_finding(
+                    title="Interesting Path Accessible",
+                    severity="Info",
+                    url=response.url,
+                    description="The scanner found an accessible path that may warrant manual review.",
+                    evidence=f"Accessible path returned HTTP 200: {response.url}",
+                    recommendation="Manually inspect the resource to determine whether it discloses sensitive functionality or information."
+                )
+            elif status in (401, 403):
+                self.add_finding(
+                    title="Restricted Path Detected",
+                    severity="Info",
+                    url=response.url,
+                    description="A restricted path was identified, indicating potentially sensitive functionality.",
+                    evidence=f"Path returned HTTP {status}: {response.url}",
+                    recommendation="Review access controls and confirm the endpoint is intended to be exposed."
+                )
+
+    def check_robots_txt(self):
+        response = self.safe_get("/robots.txt")
+        if response is None:
+            return
+
+        if response.status_code == 200 and response.text.strip():
+            disallowed = []
+            for line in response.text.splitlines():
+                if line.lower().startswith("disallow:"):
+                    disallowed.append(line.strip())
+
+            if disallowed:
+                self.add_finding(
+                    title="robots.txt Reveals Hidden Paths",
+                    severity="Low",
+                    url=response.url,
+                    description="robots.txt may disclose directories or routes not intended for obvious discovery.",
+                    evidence=" | ".join(disallowed),
+                    recommendation="Do not rely on robots.txt to hide sensitive resources. Protect sensitive endpoints with authentication and authorization."
+                )
+
